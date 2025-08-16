@@ -1,15 +1,25 @@
 {
+  "version": 2,
   "routes": [
     { "src": "/api/playlist", "dest": "/api/playlist.js" },
     { "src": "/api/proxy", "dest": "/api/proxy.js" },
+    { "src": "/play", "dest": "/public/play.html" },
     { "src": "/(.*)", "dest": "/public/index.html" }
   ],
-  "headers": {
-    "/api/playlist": {
-      "Access-Control-Allow-Origin": "*"
+  "headers": [
+    {
+      "source": "/api/playlist",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Content-Type", "value": "application/vnd.apple.mpegurl" }
+      ]
     },
-    "/api/proxy": {
-      "Access-Control-Allow-Origin": "*"
+    {
+      "source": "/api/proxy",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Content-Type", "value": "video/mp2t" }
+      ]
     }
-  }
-}
+  ]
+    }
