@@ -1,28 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IPTV Player</title>
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-  <style>
-    body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background: #000; }
-    video { width: 80%; max-width: 800px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPTV Proxy | By epltv1</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3a86ff;
+            --dark: #1e293b;
+            --light: #f1f5f9;
+        }
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+        }
+        .navbar-brand, .btn { color: var(--light) !important; }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <video id="video" controls autoplay></video>
-  <script>
-    const video = document.getElementById('video');
-    if (Hls.isSupported()) {
-      const hls = new Hls();
-      hls.loadSource('/api/playlist');
-      hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
-    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      video.src = '/api/playlist';
-      video.play();
-    }
-  </script>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">IPTV Proxy</a>
+        </div>
+    </nav>
+    <div class="container my-4">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-end-0">
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <input type="text" id="searchInput" class="form-control border-start-0" placeholder="Search channels...">
+                </div>
+            </div>
+        </div>
+        <div class="row g-3" id="channelGrid">
+            <div class="col-md-4">
+                <div class="card bg-dark text-light p-3">
+                    <h5>Test Stream</h5>
+                    <a href="/play?cid=217968" class="btn btn-primary">Play</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const search = e.target.value.toLowerCase();
+            document.querySelectorAll('#channelGrid .card').forEach(card => {
+                const title = card.querySelector('h5').textContent.toLowerCase();
+                card.style.display = title.includes(search) ? 'block' : 'none';
+            });
+        });
+    </script>
 </body>
 </html>
