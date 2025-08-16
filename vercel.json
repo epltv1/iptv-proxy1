@@ -1,0 +1,15 @@
+{
+  "routes": [
+    { "src": "/api/playlist", "dest": "/api/playlist.js" },
+    { "src": "/api/proxy", "dest": "/api/proxy.js" },
+    { "src": "/(.*)", "dest": "/public/index.html" }
+  ],
+  "headers": {
+    "/api/playlist": {
+      "Access-Control-Allow-Origin": "*"
+    },
+    "/api/proxy": {
+      "Access-Control-Allow-Origin": "*"
+    }
+  }
+}
