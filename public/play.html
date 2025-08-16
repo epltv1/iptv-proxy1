@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPTV Player | By epltv1</title>
+    <link rel="stylesheet" type="text/css" href="/js.css">
+    <script src="https://cdn.jsdelivr.net/npm/clappr@0.4.31/dist/clappr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/level-selector@0.2.0/dist/level-selector.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@clappr/hlsjs-playback@1.0.1/dist/hlsjs-playback.min.js"></script>
+</head>
+<body>
+    <div id="player-container">
+        <div id="player"></div>
+    </div>
+    <script>
+        function loadPlayer() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const cid = urlParams.get('cid') || '217968';
+            const player = new Clappr.Player({ 
+                source: `/api/playlist?cid=${cid}`,
+                width: '100%',
+                height: '100%',
+                autoPlay: true,
+                plugins: [HlsjsPlayback, LevelSelector],
+                mimeType: "application/x-mpegURL",
+                mediacontrol: { seekbar: "#ff8800", buttons: "#ff8800" },
+                parentId: "#player"
+            });
+            player.on(Clappr.Events.PLAYER_ERROR, function(error) {
+                console.log('Player error:', error);
+                setTimeout(() => {
+                    console.log("Retrying stream...");
+                    document.getElementById("player").innerHTML = "";
+                    loadPlayer();
+                }, 3000);
+            });
+        }
+        loadPlayer();
+    </script>
+</body>
+</html>
