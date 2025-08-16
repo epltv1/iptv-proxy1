@@ -1,5 +1,4 @@
 module.exports = async (req, res) => {
-  // Create a simple M3U8 playlist for the test .ts file
   const playlist = `
 #EXTM3U
 #EXT-X-VERSION:3
