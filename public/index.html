@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IPTV Player</title>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <style>
+    body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background: #000; }
+    video { width: 80%; max-width: 800px; }
+  </style>
+</head>
+<body>
+  <video id="video" controls autoplay></video>
+  <script>
+    const video = document.getElementById('video');
+    if (Hls.isSupported()) {
+      const hls = new Hls();
+      hls.loadSource('/api/playlist'); // Points to your Vercel API
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = '/api/playlist';
+      video.play();
+    }
+  </script>
+</body>
+</html>
