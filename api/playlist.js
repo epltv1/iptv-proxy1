@@ -1,4 +1,5 @@
 module.exports = async (req, res) => {
+  const { cid } = req.query;
   const playlist = `
 #EXTM3U
 #EXT-X-VERSION:3
