@@ -7,15 +7,20 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const response = await fetch(token);
+    const response = await fetch(token, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36'
+      }
+    });
     if (!response.ok) {
-      throw new Error('Failed to fetch segment');
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
     const buffer = await response.buffer();
     res.setHeader('Content-Type', 'video/mp2t');
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.send(buffer);
   } catch (error) {
-    res.status(500).send('Error fetching segment');
+    console.error('Proxy error:', error);
+    res.status(500).send(`Error fetching segment: ${error.message}`);
   }
 };
