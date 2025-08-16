@@ -3,7 +3,7 @@
   "rewrites": [
     { "source": "/api/playlist", "destination": "/api/playlist.js" },
     { "source": "/api/proxy", "destination": "/api/proxy.js" },
-    { "source": "/play", "destination": "/public/play.html" },
+    { "source": "/play(.*)", "destination": "/public/play.html" },
     { "source": "/(.*)", "destination": "/public/index.html" }
   ],
   "headers": [
