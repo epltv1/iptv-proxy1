@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "routes": [
-    { "src": "/api/playlist", "dest": "/api/playlist.js" },
-    { "src": "/api/proxy", "dest": "/api/proxy.js" },
-    { "src": "/play", "dest": "/public/play.html" },
-    { "src": "/(.*)", "dest": "/public/index.html" }
+  "rewrites": [
+    { "source": "/api/playlist", "destination": "/api/playlist.js" },
+    { "source": "/api/proxy", "destination": "/api/proxy.js" },
+    { "source": "/play", "destination": "/public/play.html" },
+    { "source": "/(.*)", "destination": "/public/index.html" }
   ],
   "headers": [
     {
@@ -22,4 +22,4 @@
       ]
     }
   ]
-    }
+}
